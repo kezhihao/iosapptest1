@@ -20,37 +20,54 @@ struct ContentView: View {
     ]
     
     var body: some View {
-        GeometryReader { geometry in
-            VStack(spacing: 12) {
-                Spacer()
-                
-                // Display
-                HStack {
+        NavigationStack {
+            GeometryReader { geometry in
+                VStack(spacing: 12) {
+                    // 作者署名和导航按钮
+                    HStack {
+                        Spacer()
+                        Text("柯志豪制作")
+                            .font(.system(size: 14))
+                            .foregroundColor(.white.opacity(0.6))
+                        
+                        NavigationLink(destination: SecondView()) {
+                            Image(systemName: "arrow.right.circle.fill")
+                                .font(.system(size: 20))
+                                .foregroundColor(.orange)
+                        }
+                        .padding(.horizontal)
+                    }
+                    
                     Spacer()
-                    Text(displayNumber)
-                        .font(.system(size: 64))
-                        .foregroundColor(.white)
-                        .padding()
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.5)
-                }
-                
-                // Buttons
-                ForEach(buttons, id: \.self) { row in
-                    HStack(spacing: 12) {
-                        ForEach(row, id: \.self) { button in
-                            CalculatorButtonView(button: button,
-                                              width: buttonWidth(for: button, in: geometry),
-                                              height: buttonHeight(in: geometry),
-                                              action: {
-                                self.tapped(button: button)
-                            })
+                    
+                    // Display
+                    HStack {
+                        Spacer()
+                        Text(displayNumber)
+                            .font(.system(size: 64))
+                            .foregroundColor(.white)
+                            .padding()
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.5)
+                    }
+                    
+                    // Buttons
+                    ForEach(buttons, id: \.self) { row in
+                        HStack(spacing: 12) {
+                            ForEach(row, id: \.self) { button in
+                                CalculatorButtonView(button: button,
+                                                  width: buttonWidth(for: button, in: geometry),
+                                                  height: buttonHeight(in: geometry),
+                                                  action: {
+                                    self.tapped(button: button)
+                                })
+                            }
                         }
                     }
                 }
+                .padding()
+                .background(Color.black)
             }
-            .padding()
-            .background(Color.black)
         }
     }
     
