@@ -56,9 +56,9 @@ struct ContentView: View {
                         HStack(spacing: 12) {
                             ForEach(row, id: \.self) { button in
                                 CalculatorButtonView(button: button,
-                                                  width: buttonWidth(for: button, in: geometry),
-                                                  height: buttonHeight(in: geometry),
-                                                  action: {
+                                                    width: buttonWidth(for: button, in: geometry),
+                                                    height: buttonHeight(in: geometry),
+                                                    action: {
                                     self.tapped(button: button)
                                 })
                             }
