@@ -1,0 +1,30 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: Show available simulators
+        run: xcrun simctl list devices available | head -30
+
+      - name: Build
+        run: |
+          cd projects/QuickClip
+          xcodegen generate
+          xcodebuild -project QuickClip.xcodeproj -scheme QuickClip -configuration Debug -destination 'platform=iOS Simulator,name=iPhone 16' build
