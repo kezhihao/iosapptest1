@@ -23,8 +23,9 @@ jobs:
       - name: Show available simulators
         run: xcrun simctl list devices available | head -30
 
+      - name: Generate Xcode project
+        run: xcodegen generate
+
       - name: Build
         run: |
-          cd projects/QuickClip
-          xcodegen generate
           xcodebuild -project QuickClip.xcodeproj -scheme QuickClip -configuration Debug -destination 'platform=iOS Simulator,name=iPhone 16' build
